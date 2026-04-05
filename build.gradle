@@ -12,7 +12,16 @@ java {
 		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
-
+repositories {
+	mavenCentral()
+	maven {
+		url "https://maven.pkg.github.com/8ollowMe/common-lib"
+		credentials {
+			username = findProperty("gpr.user")
+			password = findProperty("gpr.key")
+		}
+	}
+}
 repositories {
 	mavenCentral()
 }
@@ -33,6 +42,9 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	implementation 'com.followMe:common-lib:1.0.3'
+
 	// ai
 	implementation platform("org.springframework.ai:spring-ai-bom:1.1.4")
 	implementation "org.springframework.ai:spring-ai-starter-model-google-genai"
