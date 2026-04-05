@@ -1,0 +1,28 @@
+server:
+  port: 8080
+slack:
+  bot-token: ${SLACK_BOT_TOKEN}
+  webhook-url: ${SLACK_WEBHOOK_URL}
+  timeout: 5000
+  retry-count: 3
+
+spring:
+  ai:
+    google:
+      genai:
+        api-key: ${GOOGLE_GENAI_API_KEY}
+        chat:
+          options:
+            model: gemini-2.5-flash
+
+delivery:
+  notification:
+    cron: "0 0 6 * * *"   # 매일 06:00
+    zone: "Asia/Seoul"
+
+naver:
+  maps:
+    client-id: ${NAVER_MAP_CLIENT_ID}
+    client-secret: ${NAVER_MAP_CLIENT_SECRET}
+    directions5-url: https://maps.apigw.ntruss.com/map-direction/v1/driving
+    geocode-url: https://maps.apigw.ntruss.com/map-geocode/v2/geocode
