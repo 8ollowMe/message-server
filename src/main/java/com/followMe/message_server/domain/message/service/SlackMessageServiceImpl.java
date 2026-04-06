@@ -1,6 +1,6 @@
 package com.followMe.message_server.domain.message.service;
 
-import com.followMe.message_server.domain.message.client.SlackApiClient;
+import com.followMe.message_server.global.infra.SlackApiClient;
 import com.followMe.message_server.domain.message.dto.SlackMessageSendRequest;
 import com.followMe.message_server.domain.message.dto.SlackMessageSendResponse;
 import com.followMe.message_server.domain.message.entity.AuditContextHolder;

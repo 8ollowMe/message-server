@@ -1,4 +1,4 @@
-package com.followMe.message_server.domain.message.config;
+package com.followMe.message_server.global.config;
 
 import org.springframework.context.annotation.Configuration;
 

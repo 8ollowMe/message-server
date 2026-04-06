@@ -1,4 +1,4 @@
-package com.followMe.message_server.domain.message.client;
+package com.followMe.message_server.global.infra;
 
 public interface SlackApiClient {
     void sendMessage(String message);
