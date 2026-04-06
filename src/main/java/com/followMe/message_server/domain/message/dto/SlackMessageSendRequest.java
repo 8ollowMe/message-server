@@ -25,4 +25,7 @@ public class SlackMessageSendRequest {
 
     @NotBlank
     private String message;
+
+    @NotNull
+    private UUID requestedBy;
 }

@@ -3,6 +3,7 @@ package com.followMe.message_server.domain.message.service;
 import com.followMe.message_server.domain.message.client.SlackApiClient;
 import com.followMe.message_server.domain.message.dto.SlackMessageSendRequest;
 import com.followMe.message_server.domain.message.dto.SlackMessageSendResponse;
+import com.followMe.message_server.domain.message.entity.AuditContextHolder;
 import com.followMe.message_server.domain.message.entity.SlackMessage;
 import com.followMe.message_server.domain.message.repository.SlackMessageRepository;
 import jakarta.transaction.Transactional;
@@ -20,38 +21,47 @@ public class SlackMessageServiceImpl implements SlackMessageService {
     private final SlackApiClient slackApiClient;
 
     @Override
+    @Transactional
     public SlackMessageSendResponse send(SlackMessageSendRequest request) {
-        UUID systemUser = UUID.fromString("00000000-0000-0000-0000-000000000000");
-
-        SlackMessage slackMessage = SlackMessage.create(
-                request.getMessageType(),
-                request.getUserId(),
-                request.getReferenceType(),
-                request.getReferenceId(),
-                request.getMessage(),
-                systemUser
-        );
-
-        slackMessageRepository.save(slackMessage);
+        UUID auditor = request.getRequestedBy() != null
+                ? request.getRequestedBy()
+                : UUID.fromString("00000000-0000-0000-0000-000000000000");
 
         try {
-            slackApiClient.sendMessage(request.getMessage());
-            slackMessage.markSuccess();
+            AuditContextHolder.set(auditor);
 
-            return SlackMessageSendResponse.builder()
-                    .slackMessageId(slackMessage.getId())
-                    .sendResult(slackMessage.getSendResult())
-                    .message("슬랙 메시지 전송 성공")
-                    .build();
+            SlackMessage slackMessage = SlackMessage.create(
+                    request.getMessageType(),
+                    request.getUserId(),
+                    request.getReferenceType(),
+                    request.getReferenceId(),
+                    request.getMessage()
+            );
 
-        } catch (Exception e) {
-            slackMessage.markFail(systemUser);
+            slackMessageRepository.save(slackMessage);
 
-            return SlackMessageSendResponse.builder()
-                    .slackMessageId(slackMessage.getId())
-                    .sendResult(slackMessage.getSendResult())
-                    .message("슬랙 메시지 전송 실패: " + e.getMessage())
-                    .build();
+            try {
+                slackApiClient.sendMessage(request.getMessage());
+                slackMessage.markSuccess();
+
+                return SlackMessageSendResponse.builder()
+                        .slackMessageId(slackMessage.getId())
+                        .sendResult(slackMessage.getSendResult())
+                        .message("슬랙 메시지 전송 성공")
+                        .build();
+
+            } catch (Exception e) {
+                slackMessage.markFail();
+
+                return SlackMessageSendResponse.builder()
+                        .slackMessageId(slackMessage.getId())
+                        .sendResult(slackMessage.getSendResult())
+                        .message("슬랙 메시지 전송 실패: " + e.getMessage())
+                        .build();
+            }
+
+        } finally {
+            AuditContextHolder.clear();
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.followMe.message_server.domain.message.entity;
 
+import com.followMe.common.entity.BaseAudit;
 import com.followMe.message_server.domain.message.enums.MessageType;
 import com.followMe.message_server.domain.message.enums.ReferenceType;
 import com.followMe.message_server.domain.message.enums.SendResult;
@@ -15,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class SlackMessage {
+public class SlackMessage extends BaseAudit {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -48,32 +49,12 @@ public class SlackMessage {
     @Column(name = "retry_count")
     private Integer retryCount;
 
-    // common-lib 시 삭제
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @Column(name = "created_by")
-    private UUID createdBy;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @Column(name = "updated_by")
-    private UUID updatedBy;
-
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
-
-    @Column(name = "deleted_by")
-    private UUID deletedBy;
-
     public static SlackMessage create(
             MessageType messageType,
             UUID userId,
             ReferenceType referenceType,
             UUID referenceId,
-            String message,
-            UUID createdBy
+            String message
     ) {
         LocalDateTime now = LocalDateTime.now();
 
@@ -87,21 +68,16 @@ public class SlackMessage {
                 .sendAt(now)
                 .sendResult(SendResult.PENDING)
                 .retryCount(0)
-                .createdAt(now)
-                .createdBy(createdBy)
                 .build();
     }
 
     public void markSuccess() {
         this.sendResult = SendResult.SUCCESS;
-        this.updatedAt = LocalDateTime.now();
     }
 
-    public void markFail(UUID updatedBy) {
+    public void markFail() {
         this.sendResult = SendResult.FAIL;
         this.retryCount = this.retryCount == null ? 1 : this.retryCount + 1;
-        this.updatedAt = LocalDateTime.now();
-        this.updatedBy = updatedBy;
     }
 }
 

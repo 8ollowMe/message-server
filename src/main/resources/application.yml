@@ -1,5 +1,6 @@
 server:
-  port: 8080
+  port: 8081
+
 slack:
   bot-token: ${SLACK_BOT_TOKEN}
   webhook-url: ${SLACK_WEBHOOK_URL}
@@ -7,13 +8,38 @@ slack:
   retry-count: 3
 
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/message_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  cloud:
+    discovery:
+      enabled: false
+
   ai:
     google:
       genai:
-        api-key: ${GOOGLE_GENAI_API_KEY}
+        api-key: ${GEMINI_API_KEY}
         chat:
           options:
             model: gemini-2.5-flash
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
 
 delivery:
   notification:
