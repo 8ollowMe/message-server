@@ -8,5 +8,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @ConfigurationProperties(prefix = "external.slack")
 public class SlackProperties {
-    private String webhookUrl;
+  private String webhookUrl;
 }

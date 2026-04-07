@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "automation.dispatch")
 public class DispatchAutomationProperties {
 
-    private String cron;
-    private String zone;
-    private boolean enabled;
-    private String senderSystemId;
+  private String cron;
+  private String zone;
+  private boolean enabled;
+  private String senderSystemId;
 }

@@ -4,33 +4,32 @@ import com.followMe.message_server.domain.ai.dto.request.DispatchDeadlineProcess
 import com.followMe.message_server.domain.ai.dto.request.ProductItemRequest;
 import com.followMe.message_server.domain.ai.dto.request.WaypointRequest;
 import com.followMe.message_server.domain.ai.dto.response.DispatchDeadlineResult;
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class SlackMessageFormatter {
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+  private static final DateTimeFormatter DATE_TIME_FORMATTER =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public String formatOrderAlert(
-            DispatchDeadlineProcessRequest request,
-            DispatchDeadlineResult result
-    ) {
-        String products = request.getProducts().stream()
-                .map(p -> p.getProductName() + " " + p.getQuantity() + p.getUnit())
-                .collect(Collectors.joining(", "));
+  public String formatOrderAlert(
+      DispatchDeadlineProcessRequest request, DispatchDeadlineResult result) {
+    String products =
+        request.getProducts().stream()
+            .map(p -> p.getProductName() + " " + p.getQuantity() + p.getUnit())
+            .collect(Collectors.joining(", "));
 
-        String waypoints = (request.getWaypoints() == null || request.getWaypoints().isEmpty())
-                ? "없음"
-                : request.getWaypoints().stream()
+    String waypoints =
+        (request.getWaypoints() == null || request.getWaypoints().isEmpty())
+            ? "없음"
+            : request.getWaypoints().stream()
                 .map(WaypointRequest::getName)
                 .collect(Collectors.joining(", "));
 
-        return """
+    return """
                 [허브 발송 알림]
 
                 주문 번호 : %s
@@ -48,34 +47,34 @@ public class SlackMessageFormatter {
 
                 요약 : %s
                 사유 : %s
-                """.formatted(
-                request.getOrderNumber(),
-                request.getOrdererName(),
-                request.getOrdererEmail(),
-                formatDateTime(request.getOrderTime()),
-                products,
-                request.getRequestNote(),
-                request.getOrigin().getName(),
-                waypoints,
-                request.getDestination().getAddress(),
-                request.getDeliveryManagerName(),
-                request.getDeliveryManagerEmail(),
-                formatDateTime(result.getEstimatedArrivalAt()),
-                formatDateTime(result.getFinalDispatchDeadline()),
-                nullToDash(result.getSummary()),
-                nullToDash(result.getReason())
-        );
-    }
+                """
+        .formatted(
+            request.getOrderNumber(),
+            request.getOrdererName(),
+            request.getOrdererEmail(),
+            formatDateTime(request.getOrderTime()),
+            products,
+            request.getRequestNote(),
+            request.getOrigin().getName(),
+            waypoints,
+            request.getDestination().getAddress(),
+            request.getDeliveryManagerName(),
+            request.getDeliveryManagerEmail(),
+            formatDateTime(result.getEstimatedArrivalAt()),
+            formatDateTime(result.getFinalDispatchDeadline()),
+            nullToDash(result.getSummary()),
+            nullToDash(result.getReason()));
+  }
 
-    private String formatDateTime(LocalDateTime value) {
-        return value == null ? "-" : value.format(DATE_TIME_FORMATTER);
-    }
+  private String formatDateTime(LocalDateTime value) {
+    return value == null ? "-" : value.format(DATE_TIME_FORMATTER);
+  }
 
-    private String nullToDash(String value) {
-        return (value == null || value.isBlank()) ? "-" : value;
-    }
+  private String nullToDash(String value) {
+    return (value == null || value.isBlank()) ? "-" : value;
+  }
 
-    private String formatProduct(ProductItemRequest item) {
-        return item.getProductName() + " " + item.getQuantity() + item.getUnit();
-    }
+  private String formatProduct(ProductItemRequest item) {
+    return item.getProductName() + " " + item.getQuantity() + item.getUnit();
+  }
 }

@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class InternalSlackMessageController {
 
-    private final SlackMessageService slackMessageService;
+  private final SlackMessageService slackMessageService;
 
-    @PostMapping("/send")
-    public ResponseEntity<SlackMessageSendResponse> send(
-            @Valid @RequestBody SlackMessageSendRequest request
-    ) {
-        return ResponseEntity.ok(slackMessageService.send(request));
-    }
+  @PostMapping("/send")
+  public ResponseEntity<SlackMessageSendResponse> send(
+      @Valid @RequestBody SlackMessageSendRequest request) {
+    return ResponseEntity.ok(slackMessageService.send(request));
+  }
 }

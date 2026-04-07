@@ -3,25 +3,24 @@ package com.followMe.message_server.domain.ai.service;
 import com.followMe.message_server.domain.ai.dto.request.DispatchDeadlineProcessRequest;
 import com.followMe.message_server.domain.ai.dto.request.ProductItemRequest;
 import com.followMe.message_server.domain.ai.dto.request.WaypointRequest;
-import org.springframework.stereotype.Component;
-
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class PromptGenerator {
 
-    public String generate(DispatchDeadlineProcessRequest request) {
-        String products = request.getProducts().stream()
-                .map(this::formatProduct)
-                .collect(Collectors.joining(", "));
+  public String generate(DispatchDeadlineProcessRequest request) {
+    String products =
+        request.getProducts().stream().map(this::formatProduct).collect(Collectors.joining(", "));
 
-        String waypoints = request.getWaypoints() == null || request.getWaypoints().isEmpty()
-                ? "없음"
-                : request.getWaypoints().stream()
+    String waypoints =
+        request.getWaypoints() == null || request.getWaypoints().isEmpty()
+            ? "없음"
+            : request.getWaypoints().stream()
                 .map(WaypointRequest::getName)
                 .collect(Collectors.joining(", "));
 
-        return """
+    return """
                 당신은 물류 발송 시한 및 배송 예상 시간 계산 AI입니다.
                 아래 정보를 바탕으로,
                 1) 배송 예상 도착 시간
@@ -59,25 +58,25 @@ public class PromptGenerator {
                   "summary": "2025-12-12 13:30 도착 예상이며, 납기 준수를 위해 2025-12-10 09:00까지 발송이 필요합니다.",
                   "reason": "경유 허브 이동 시간, 상품 수량, 납기 요청 시각, 배송담당자 근무시간을 고려한 결과입니다."
                 }
-                """.formatted(
-                request.getOrderNumber(),
-                request.getOrdererName(),
-                request.getOrdererEmail(),
-                request.getOrderTime(),
-                products,
-                request.getRequestNote(),
-                request.getDeliveryDueAt(),
-                request.getOrigin().getName(),
-                waypoints,
-                request.getDestination().getAddress(),
-                request.getDeliveryManagerName(),
-                request.getDeliveryManagerEmail(),
-                request.getWorkStart(),
-                request.getWorkEnd()
-        );
-    }
+                """
+        .formatted(
+            request.getOrderNumber(),
+            request.getOrdererName(),
+            request.getOrdererEmail(),
+            request.getOrderTime(),
+            products,
+            request.getRequestNote(),
+            request.getDeliveryDueAt(),
+            request.getOrigin().getName(),
+            waypoints,
+            request.getDestination().getAddress(),
+            request.getDeliveryManagerName(),
+            request.getDeliveryManagerEmail(),
+            request.getWorkStart(),
+            request.getWorkEnd());
+  }
 
-    private String formatProduct(ProductItemRequest item) {
-        return item.getProductName() + " " + item.getQuantity() + item.getUnit();
-    }
+  private String formatProduct(ProductItemRequest item) {
+    return item.getProductName() + " " + item.getQuantity() + item.getUnit();
+  }
 }

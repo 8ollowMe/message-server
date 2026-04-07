@@ -4,18 +4,13 @@ import java.util.List;
 
 public class GeminiRequestMapper {
 
-    public static GeminiRequest from(AiHttpRequest request) {
-        return GeminiRequest.builder()
-                .contents(List.of(
-                        GeminiRequest.Content.builder()
-                                .parts(List.of(
-                                        GeminiRequest.Part.builder()
-                                                .text(request.getPrompt())
-                                                .build()
-                                ))
-                                .build()
-                ))
-                .build();
-    }
+  public static GeminiRequest from(AiHttpRequest request) {
+    return GeminiRequest.builder()
+        .contents(
+            List.of(
+                GeminiRequest.Content.builder()
+                    .parts(List.of(GeminiRequest.Part.builder().text(request.getPrompt()).build()))
+                    .build()))
+        .build();
+  }
 }
-

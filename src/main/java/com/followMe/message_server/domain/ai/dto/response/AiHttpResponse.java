@@ -8,5 +8,5 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class AiHttpResponse {
-    private String rawResponse;
+  private String rawResponse;
 }

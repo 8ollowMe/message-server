@@ -11,18 +11,19 @@ import org.springframework.web.client.RestClient;
 @RequiredArgsConstructor
 public class SlackApiClientImpl implements SlackApiClient {
 
-    private final SlackProperties slackProperties;
-    private final RestClient restClient = RestClient.create();
+  private final SlackProperties slackProperties;
+  private final RestClient restClient = RestClient.create();
 
-    @Override
-    public void sendMessage(String message) {
-        SlackWebhookRequest request = new SlackWebhookRequest(message);
+  @Override
+  public void sendMessage(String message) {
+    SlackWebhookRequest request = new SlackWebhookRequest(message);
 
-        restClient.post()
-                .uri(slackProperties.getWebhookUrl())
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(request)
-                .retrieve()
-                .toBodilessEntity();
-    }
+    restClient
+        .post()
+        .uri(slackProperties.getWebhookUrl())
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(request)
+        .retrieve()
+        .toBodilessEntity();
+  }
 }

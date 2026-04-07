@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MorningAiScheduler {
 
-    private final MorningAiAutomationService morningAiAutomationService;
+  private final MorningAiAutomationService morningAiAutomationService;
 
-    @Scheduled(cron = "0 0 6 * * *", zone = "Asia/Seoul")
-    public void run() {
-        log.info("=== 아침 AI 자동 발송 시작 ===");
-        morningAiAutomationService.execute();
-        log.info("=== 아침 AI 자동 발송 종료 ===");
-    }
+  @Scheduled(cron = "0 0 6 * * *", zone = "Asia/Seoul")
+  public void run() {
+    log.info("=== 아침 AI 자동 발송 시작 ===");
+    morningAiAutomationService.execute();
+    log.info("=== 아침 AI 자동 발송 종료 ===");
+  }
 }

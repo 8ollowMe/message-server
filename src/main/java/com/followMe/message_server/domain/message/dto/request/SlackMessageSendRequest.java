@@ -4,30 +4,23 @@ import com.followMe.message_server.global.enums.MessageType;
 import com.followMe.message_server.global.enums.ReferenceType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.UUID;
 
 @Getter
 @Builder
 public class SlackMessageSendRequest {
 
-    @NotNull
-    private MessageType messageType;
+  @NotNull private MessageType messageType;
 
-    @NotNull
-    private UUID userId;
+  @NotNull private UUID userId;
 
-    @NotNull
-    private ReferenceType referenceType;
+  @NotNull private ReferenceType referenceType;
 
-    @NotNull
-    private UUID referenceId;
+  @NotNull private UUID referenceId;
 
-    @NotBlank
-    private String message;
+  @NotBlank private String message;
 
-    @NotNull
-    private UUID requestedBy;
+  @NotNull private UUID requestedBy;
 }

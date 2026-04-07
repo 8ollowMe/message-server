@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DispatchAutomationController {
 
-    private final MorningAiAutomationService morningAiAutomationService;
+  private final MorningAiAutomationService morningAiAutomationService;
 
-    @PostMapping("/run")
-    public ResponseEntity<String> runNow() {
-        morningAiAutomationService.execute();
-        return ResponseEntity.ok("아침 배송 자동 발송 작업이 실행되었습니다.");
-    }
+  @PostMapping("/run")
+  public ResponseEntity<String> runNow() {
+    morningAiAutomationService.execute();
+    return ResponseEntity.ok("아침 배송 자동 발송 작업이 실행되었습니다.");
+  }
 }

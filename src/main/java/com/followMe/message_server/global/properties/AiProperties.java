@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @ConfigurationProperties(prefix = "external.ai")
 public class AiProperties {
-    private String baseUrl;
-    private String path;
-    private String apiKey;
+  private String baseUrl;
+  private String path;
+  private String apiKey;
 }

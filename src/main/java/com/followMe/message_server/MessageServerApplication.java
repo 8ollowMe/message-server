@@ -14,8 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = "com.followMe")
 public class MessageServerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MessageServerApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(MessageServerApplication.class, args);
+  }
 }

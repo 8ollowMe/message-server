@@ -8,5 +8,5 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class AiHttpRequest {
-    private String prompt;
+  private String prompt;
 }

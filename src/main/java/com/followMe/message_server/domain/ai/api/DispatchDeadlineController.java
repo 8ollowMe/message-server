@@ -17,12 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/delivery-plans")
 public class DispatchDeadlineController {
 
-    private final DispatchDeadlineFacade dispatchDeadlineFacade;
+  private final DispatchDeadlineFacade dispatchDeadlineFacade;
 
-    @PostMapping
-    public ResponseEntity<ApiResponse<DispatchProcessResponse>> process(
-            @Valid @RequestBody DispatchDeadlineProcessRequest request
-    ) {
-        return ResponseEntity.ok(ApiResponse.ok(dispatchDeadlineFacade.process(request)));
-    }
+  @PostMapping
+  public ResponseEntity<ApiResponse<DispatchProcessResponse>> process(
+      @Valid @RequestBody DispatchDeadlineProcessRequest request) {
+    return ResponseEntity.ok(ApiResponse.ok(dispatchDeadlineFacade.process(request)));
+  }
 }

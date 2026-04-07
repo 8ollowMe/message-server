@@ -8,6 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class WaypointRequest {
 
-    @NotBlank
-    private String name;
+  @NotBlank private String name;
 }

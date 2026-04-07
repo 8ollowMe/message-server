@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class SlackWebhookRequest {
-    private String text;
+  private String text;
 }

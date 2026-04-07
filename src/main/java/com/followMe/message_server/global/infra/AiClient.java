@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(name = "aiClient", url = "${clients.ai.url}")
 public interface AiClient {
-    AiHttpResponse requestDispatchDeadline(AiHttpRequest request);
+  AiHttpResponse requestDispatchDeadline(AiHttpRequest request);
 
-    @PostMapping("/api/internal/v1/ai/dispatch-deadline")
-    DispatchDeadlineResponse generateDispatchDeadline(
-            @RequestHeader("X-Internal-Request") String internalRequest,
-            @RequestHeader("X-System-Id") String systemId,
-            @RequestBody DispatchDeadlineRequest request
-    );
+  @PostMapping("/api/internal/v1/ai/dispatch-deadline")
+  DispatchDeadlineResponse generateDispatchDeadline(
+      @RequestHeader("X-Internal-Request") String internalRequest,
+      @RequestHeader("X-System-Id") String systemId,
+      @RequestBody DispatchDeadlineRequest request);
 }

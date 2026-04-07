@@ -6,5 +6,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties(AiProperties.class)
-public class AiConfig {
-}
+public class AiConfig {}

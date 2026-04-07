@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductItemRequest {
 
-    @NotBlank
-    private String productName;
+  @NotBlank private String productName;
 
-    @Min(1)
-    private int quantity;
+  @Min(1)
+  private int quantity;
 
-    @NotBlank
-    private String unit;
+  @NotBlank private String unit;
 }
