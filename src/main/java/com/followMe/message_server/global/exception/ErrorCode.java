@@ -10,7 +10,8 @@ public enum ErrorCode {
     AI_RESPONSE_PARSE_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "AI_002", "AI 응답 파싱에 실패했습니다."),
     SLACK_SEND_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "SLACK_001", "슬랙 메시지 전송에 실패했습니다."),
     INVALID_REQUEST(HttpStatus.BAD_REQUEST, "COMMON_001", "잘못된 요청입니다."),
-    SLACK_MESSAGE_NOT_FOUND(HttpStatus.NOT_FOUND,"COMMON_002","해당 메세지를 찾을수 없습니다.");
+    SLACK_MESSAGE_NOT_FOUND(HttpStatus.NOT_FOUND,"SLACK_002","해당 메세지를 찾을 수 없습니다."),
+    AI_HISTORY_NOT_FOUND(HttpStatus.NOT_FOUND,"AI_003","해당 AI문을 찾을 수 없습니다.");
     private final HttpStatus status;
     private final String code;
     private final String message;
