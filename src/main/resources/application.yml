@@ -8,6 +8,10 @@ slack:
   retry-count: 3
 
 spring:
+  ai:
+    model:
+      chat: none
+
   datasource:
     url: jdbc:postgresql://localhost:5432/message_db
     username: postgres
@@ -27,14 +31,14 @@ spring:
     discovery:
       enabled: false
 
+external:
   ai:
-    google:
-      genai:
-        api-key: ${GEMINI_API_KEY}
-        chat:
-          options:
-            model: gemini-2.5-flash
+    base-url: https://generativelanguage.googleapis.com
+    path: /v1beta/models/gemini-2.5-flash:generateContent
+    api-key: ${GEMINI_API_KEY}
 
+  slack:
+    webhook-url: ${SLACK_WEBHOOK_URL}
 eureka:
   client:
     enabled: false

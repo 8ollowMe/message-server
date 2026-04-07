@@ -18,10 +18,31 @@ public class AiResponseParser {
         try {
             JsonNode root = objectMapper.readTree(rawResponse);
 
-            String estimatedArrivalAt = root.get("estimatedArrivalAt").asText();
-            String finalDispatchDeadline = root.get("finalDispatchDeadline").asText();
-            String summary = root.get("summary").asText();
-            String reason = root.get("reason").asText();
+            JsonNode textNode = root.path("candidates")
+                    .path(0)
+                    .path("content")
+                    .path("parts")
+                    .path(0)
+                    .path("text");
+
+            if (textNode.isMissingNode() || textNode.isNull()) {
+                throw new BusinessException(ErrorCode.AI_RESPONSE_PARSE_FAILED);
+            }
+
+            String text = textNode.asText();
+
+            String cleaned = stripCodeFence(text);
+
+            JsonNode resultNode = objectMapper.readTree(cleaned);
+
+            String estimatedArrivalAt = resultNode.path("estimatedArrivalAt").asText(null);
+            String finalDispatchDeadline = resultNode.path("finalDispatchDeadline").asText(null);
+            String summary = resultNode.path("summary").asText(null);
+            String reason = resultNode.path("reason").asText(null);
+
+            if (estimatedArrivalAt == null || finalDispatchDeadline == null || summary == null || reason == null) {
+                throw new BusinessException(ErrorCode.AI_RESPONSE_PARSE_FAILED);
+            }
 
             return DispatchDeadlineResult.builder()
                     .estimatedArrivalAt(LocalDateTime.parse(estimatedArrivalAt))
@@ -29,8 +50,27 @@ public class AiResponseParser {
                     .summary(summary)
                     .reason(reason)
                     .build();
+
+        } catch (BusinessException e) {
+            throw e;
         } catch (Exception e) {
             throw new BusinessException(ErrorCode.AI_RESPONSE_PARSE_FAILED, e);
         }
+    }
+
+    private String stripCodeFence(String text) {
+        String trimmed = text.trim();
+
+        if (trimmed.startsWith("```json")) {
+            trimmed = trimmed.substring(7).trim();
+        } else if (trimmed.startsWith("```")) {
+            trimmed = trimmed.substring(3).trim();
+        }
+
+        if (trimmed.endsWith("```")) {
+            trimmed = trimmed.substring(0, trimmed.length() - 3).trim();
+        }
+
+        return trimmed;
     }
 }
