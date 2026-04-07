@@ -1,7 +1,7 @@
 package com.followMe.message_server.domain.message.dto;
 
-import com.followMe.message_server.domain.message.enums.MessageType;
-import com.followMe.message_server.domain.message.enums.ReferenceType;
+import com.followMe.message_server.global.enums.MessageType;
+import com.followMe.message_server.global.enums.ReferenceType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

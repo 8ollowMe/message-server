@@ -1,6 +1,6 @@
 package com.followMe.message_server.domain.message.dto;
 
-import com.followMe.message_server.domain.message.enums.SendResult;
+import com.followMe.message_server.global.enums.SendResult;
 import lombok.Builder;
 import lombok.Getter;
 

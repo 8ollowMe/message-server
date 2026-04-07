@@ -6,6 +6,7 @@ import com.followMe.message_server.domain.ai.dto.request.WaypointRequest;
 import com.followMe.message_server.domain.ai.dto.response.DispatchDeadlineResult;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
@@ -20,10 +21,10 @@ public class SlackMessageFormatter {
             DispatchDeadlineResult result
     ) {
         String products = request.getProducts().stream()
-                .map(this::formatProduct)
+                .map(p -> p.getProductName() + " " + p.getQuantity() + p.getUnit())
                 .collect(Collectors.joining(", "));
 
-        String waypoints = request.getWaypoints() == null || request.getWaypoints().isEmpty()
+        String waypoints = (request.getWaypoints() == null || request.getWaypoints().isEmpty())
                 ? "없음"
                 : request.getWaypoints().stream()
                 .map(WaypointRequest::getName)
@@ -51,7 +52,7 @@ public class SlackMessageFormatter {
                 request.getOrderNumber(),
                 request.getOrdererName(),
                 request.getOrdererEmail(),
-                request.getOrderTime().format(DATE_TIME_FORMATTER),
+                formatDateTime(request.getOrderTime()),
                 products,
                 request.getRequestNote(),
                 request.getOrigin().getName(),
@@ -59,11 +60,19 @@ public class SlackMessageFormatter {
                 request.getDestination().getAddress(),
                 request.getDeliveryManagerName(),
                 request.getDeliveryManagerEmail(),
-                result.getEstimatedArrivalAt().format(DATE_TIME_FORMATTER),
-                result.getFinalDispatchDeadline().format(DATE_TIME_FORMATTER),
-                result.getSummary(),
-                result.getReason()
+                formatDateTime(result.getEstimatedArrivalAt()),
+                formatDateTime(result.getFinalDispatchDeadline()),
+                nullToDash(result.getSummary()),
+                nullToDash(result.getReason())
         );
+    }
+
+    private String formatDateTime(LocalDateTime value) {
+        return value == null ? "-" : value.format(DATE_TIME_FORMATTER);
+    }
+
+    private String nullToDash(String value) {
+        return (value == null || value.isBlank()) ? "-" : value;
     }
 
     private String formatProduct(ProductItemRequest item) {

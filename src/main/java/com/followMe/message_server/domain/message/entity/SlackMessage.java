@@ -1,9 +1,9 @@
 package com.followMe.message_server.domain.message.entity;
 
 import com.followMe.common.entity.BaseAudit;
-import com.followMe.message_server.domain.message.enums.MessageType;
-import com.followMe.message_server.domain.message.enums.ReferenceType;
-import com.followMe.message_server.domain.message.enums.SendResult;
+import com.followMe.message_server.global.enums.MessageType;
+import com.followMe.message_server.global.enums.ReferenceType;
+import com.followMe.message_server.global.enums.SendResult;
 import jakarta.persistence.*;
 import lombok.*;
 
