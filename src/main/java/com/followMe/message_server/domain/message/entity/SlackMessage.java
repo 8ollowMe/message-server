@@ -79,5 +79,12 @@ public class SlackMessage extends BaseAudit {
         this.sendResult = SendResult.FAIL;
         this.retryCount = this.retryCount == null ? 1 : this.retryCount + 1;
     }
+    public void updateMessage(String message) {
+        this.message = message;
+    }
+
+    public void softDeleteMessage(UUID deletedBy) {
+        this.softDelete(deletedBy);
+    }
 }
 

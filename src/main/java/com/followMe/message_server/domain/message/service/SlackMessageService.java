@@ -1,10 +1,11 @@
 package com.followMe.message_server.domain.message.service;
 
+import com.followMe.common.pagination.PageResponse;
 import com.followMe.message_server.domain.ai.dto.request.DispatchDeadlineProcessRequest;
 import com.followMe.message_server.domain.ai.dto.response.DispatchDeadlineResult;
-import com.followMe.message_server.domain.message.dto.SlackMessageSendRequest;
-import com.followMe.message_server.domain.message.dto.SlackMessageSendResponse;
+import com.followMe.message_server.domain.message.dto.*;
 import com.followMe.message_server.domain.message.entity.SlackMessage;
+import com.followMe.common.pagination.PageRequest;
 
 import java.util.UUID;
 
@@ -18,4 +19,11 @@ public interface SlackMessageService {
             UUID userId,
             UUID requestedBy
     );
+    SlackMessageDetailResponse get(UUID slackMessageId);
+
+    PageResponse<SlackMessageSummaryResponse> getList(PageRequest pageRequest);
+
+    SlackMessageDetailResponse update(UUID slackMessageId, SlackMessageUpdateRequest request);
+
+    void delete(UUID slackMessageId, UUID requestedBy);
 }

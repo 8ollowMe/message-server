@@ -1,15 +1,16 @@
 package com.followMe.message_server.domain.message.api;
 
-import com.followMe.message_server.domain.message.dto.SlackMessageSendRequest;
-import com.followMe.message_server.domain.message.dto.SlackMessageSendResponse;
+import com.followMe.common.pagination.PageResponse;
+import com.followMe.message_server.domain.ai.dto.response.ApiResponse;
+import com.followMe.message_server.domain.message.dto.*;
 import com.followMe.message_server.domain.message.service.SlackMessageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import com.followMe.common.pagination.PageRequest;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/messages")
@@ -23,5 +24,35 @@ public class SlackMessageController {
             @Valid @RequestBody SlackMessageSendRequest request
     ) {
         return ResponseEntity.ok(slackMessageService.send(request));
+    }
+    @GetMapping("/{slackMessageId}")
+    public ResponseEntity<ApiResponse<SlackMessageDetailResponse>> get(
+            @PathVariable UUID slackMessageId
+    ) {
+        return ResponseEntity.ok(ApiResponse.ok(slackMessageService.get(slackMessageId)));
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<PageResponse<SlackMessageSummaryResponse>>> getList(
+            PageRequest pageRequest
+    ) {
+        return ResponseEntity.ok(ApiResponse.ok(slackMessageService.getList(pageRequest)));
+    }
+
+    @PutMapping("/{slackMessageId}")
+    public ResponseEntity<ApiResponse<SlackMessageDetailResponse>> update(
+            @PathVariable UUID slackMessageId,
+            @Valid @RequestBody SlackMessageUpdateRequest request
+    ) {
+        return ResponseEntity.ok(ApiResponse.ok(slackMessageService.update(slackMessageId, request)));
+    }
+
+    @DeleteMapping("/{slackMessageId}")
+    public ResponseEntity<ApiResponse<Void>> delete(
+            @PathVariable UUID slackMessageId,
+            @RequestParam(required = false) UUID requestedBy
+    ) {
+        slackMessageService.delete(slackMessageId, requestedBy);
+        return ResponseEntity.ok(ApiResponse.ok(null));
     }
 }
