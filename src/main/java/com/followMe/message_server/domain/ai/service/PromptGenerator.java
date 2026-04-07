@@ -51,8 +51,6 @@ public class PromptGenerator {
                 - 허브 이동 및 상차/하차에 필요한 일반적인 물류 처리 시간
 
                 응답은 반드시 아래 JSON 형식만 반환하세요.
-                반드시 순수 JSON만 반환하세요.
-                마크다운 코드블록(```)은 절대 포함하지 마세요.
                 {
                   "estimatedArrivalAt": "2025-12-12T13:30:00",
                   "finalDispatchDeadline": "2025-12-10T09:00:00",
