@@ -68,4 +68,12 @@ public class AiHistory extends BaseAudit {
         this.status = AiStatus.FAILED;
         this.respondedAt = LocalDateTime.now();
     }
+
+    public void updateReason(String reason) {
+        this.reason = reason;
+    }
+
+    public void aiSoftDelete(UUID deletedBy) {
+        this.aiSoftDelete(deletedBy);
+    }
 }
