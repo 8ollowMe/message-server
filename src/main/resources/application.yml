@@ -1,0 +1,70 @@
+server:
+  port: 8081
+clients:
+  delivery:
+    url: http://localhost:8082
+  ai:
+    url: http://localhost:8083
+
+slack:
+  bot-token: ${SLACK_BOT_TOKEN}
+  webhook-url: ${SLACK_WEBHOOK_URL}
+  timeout: 5000
+  retry-count: 3
+
+spring:
+  ai:
+    model:
+      chat: none
+  datasource:
+    url: jdbc:postgresql://localhost:5432/message_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  cloud:
+    discovery:
+      enabled: false
+
+external:
+  ai:
+    base-url: https://generativelanguage.googleapis.com
+    path: /v1beta/models/gemini-2.5-flash:generateContent
+    api-key: ${GEMINI_API_KEY}
+
+  slack:
+    webhook-url: ${SLACK_WEBHOOK_URL}
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+automation:
+  dispatch:
+    cron: "0 0 6 * * *"
+    zone: "Asia/Seoul"
+    enabled: true
+    sender-system-id: "MESSAGE-SERVER"
+
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+naver:
+  maps:
+    client-id: ${NAVER_MAP_CLIENT_ID}
+    client-secret: ${NAVER_MAP_CLIENT_SECRET}
+    directions5-url: https://maps.apigw.ntruss.com/map-direction/v1/driving
+    geocode-url: https://maps.apigw.ntruss.com/map-geocode/v2/geocode
