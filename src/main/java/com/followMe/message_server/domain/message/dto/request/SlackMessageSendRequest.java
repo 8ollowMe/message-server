@@ -4,11 +4,13 @@ import com.followMe.message_server.global.enums.MessageType;
 import com.followMe.message_server.global.enums.ReferenceType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.UUID;
 
 @Getter
+@Builder
 public class SlackMessageSendRequest {
 
     @NotNull
