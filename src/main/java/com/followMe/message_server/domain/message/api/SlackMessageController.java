@@ -2,7 +2,11 @@ package com.followMe.message_server.domain.message.api;
 
 import com.followMe.common.pagination.PageResponse;
 import com.followMe.message_server.domain.ai.dto.response.ApiResponse;
-import com.followMe.message_server.domain.message.dto.*;
+import com.followMe.message_server.domain.message.dto.request.SlackMessageSendRequest;
+import com.followMe.message_server.domain.message.dto.request.SlackMessageUpdateRequest;
+import com.followMe.message_server.domain.message.dto.response.SlackMessageDetailResponse;
+import com.followMe.message_server.domain.message.dto.response.SlackMessageSendResponse;
+import com.followMe.message_server.domain.message.dto.response.SlackMessageSummaryResponse;
 import com.followMe.message_server.domain.message.service.SlackMessageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

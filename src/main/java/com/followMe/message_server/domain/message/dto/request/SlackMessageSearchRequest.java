@@ -1,4 +1,4 @@
-package com.followMe.message_server.domain.message.dto;
+package com.followMe.message_server.domain.message.dto.request;
 
 import com.followMe.message_server.global.enums.MessageType;
 import com.followMe.message_server.global.enums.ReferenceType;

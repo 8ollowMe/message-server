@@ -1,4 +1,4 @@
-package com.followMe.message_server.domain.message.dto;
+package com.followMe.message_server.domain.message.dto.response;
 
 import com.followMe.message_server.domain.message.entity.SlackMessage;
 import com.followMe.message_server.global.enums.MessageType;
@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Getter
 @Builder
-public class SlackMessageSummaryResponse {
+public class SlackMessageDetailResponse {
 
     private UUID slackMessageId;
     private MessageType messageType;
@@ -24,9 +24,12 @@ public class SlackMessageSummaryResponse {
     private SendResult sendResult;
     private LocalDateTime sendAt;
     private LocalDateTime createdAt;
+    private UUID createdBy;
+    private LocalDateTime updatedAt;
+    private UUID updatedBy;
 
-    public static SlackMessageSummaryResponse from(SlackMessage slackMessage) {
-        return SlackMessageSummaryResponse.builder()
+    public static SlackMessageDetailResponse from(SlackMessage slackMessage) {
+        return SlackMessageDetailResponse.builder()
                 .slackMessageId(slackMessage.getId())
                 .messageType(slackMessage.getMessageType())
                 .userId(slackMessage.getUserId())
@@ -36,6 +39,9 @@ public class SlackMessageSummaryResponse {
                 .sendResult(slackMessage.getSendResult())
                 .sendAt(slackMessage.getSendAt())
                 .createdAt(LocalDateTime.ofInstant(slackMessage.getCreatedAt(), ZoneId.of("Asia/Seoul")))
+                .createdBy(slackMessage.getCreatedBy())
+                .updatedAt(LocalDateTime.ofInstant(slackMessage.getUpdatedAt(), ZoneId.of("Asia/Seoul")))
+                .updatedBy(slackMessage.getUpdatedBy())
                 .build();
     }
 }

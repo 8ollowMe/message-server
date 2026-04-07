@@ -1,4 +1,4 @@
-package com.followMe.message_server.domain.message.config;
+package com.followMe.message_server.global.config;
 
 import com.followMe.message_server.domain.message.entity.SlackProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

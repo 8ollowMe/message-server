@@ -1,4 +1,4 @@
-package com.followMe.message_server.domain.message.dto;
+package com.followMe.message_server.domain.message.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

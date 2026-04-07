@@ -1,4 +1,4 @@
-package com.followMe.message_server.domain.message.dto;
+package com.followMe.message_server.domain.message.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
