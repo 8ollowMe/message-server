@@ -1,7 +1,7 @@
 package com.followMe.message_server.global.infra;
 
 import com.followMe.message_server.domain.message.dto.request.SlackWebhookRequest;
-import com.followMe.message_server.domain.message.entity.SlackProperties;
+import com.followMe.message_server.global.properties.SlackProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
