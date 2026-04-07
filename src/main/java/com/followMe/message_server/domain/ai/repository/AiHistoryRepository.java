@@ -1,4 +1,9 @@
 package com.followMe.message_server.domain.ai.repository;
 
-public interface AiHistoryRepository {
+import com.followMe.message_server.domain.ai.entity.AiHistory;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.UUID;
+
+public interface AiHistoryRepository extends JpaRepository<AiHistory, UUID> {
 }
