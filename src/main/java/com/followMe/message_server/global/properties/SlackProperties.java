@@ -1,4 +1,4 @@
-package com.followMe.message_server.domain.message.entity;
+package com.followMe.message_server.global.properties;
 
 import lombok.Getter;
 import lombok.Setter;
