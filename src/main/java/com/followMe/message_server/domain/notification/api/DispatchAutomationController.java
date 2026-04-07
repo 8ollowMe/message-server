@@ -14,10 +14,9 @@ public class DispatchAutomationController {
 
     private final MorningAiAutomationService morningAiAutomationService;
 
-    // 수동 테스트용
     @PostMapping("/run")
     public ResponseEntity<String> runNow() {
-        morningAiAutomationService.processTarget();
+        morningAiAutomationService.execute();
         return ResponseEntity.ok("아침 배송 자동 발송 작업이 실행되었습니다.");
     }
 }

@@ -33,8 +33,8 @@ public class MorningAiAutomationServiceImpl implements MorningAiAutomationServic
     private final AiHistoryRepository aiHistoryRepository;
     private final ObjectMapper objectMapper;
 
+    @Override
     public void execute() {
-
         List<DeliveryTargetDto> targets =
                 deliveryClient.getMorningTargets("true", "MESSAGE-SERVER");
 
