@@ -50,6 +50,10 @@ delivery:
     cron: "0 0 6 * * *"   # 매일 06:00
     zone: "Asia/Seoul"
 
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
 naver:
   maps:
     client-id: ${NAVER_MAP_CLIENT_ID}
