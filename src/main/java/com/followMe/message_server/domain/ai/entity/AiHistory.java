@@ -55,6 +55,23 @@ public class AiHistory extends BaseAudit {
     @Column(name = "reason")
     private String reason;
 
+    public static AiHistory create(
+            AiRequestType requestType,
+            ReferenceType referenceType,
+            UUID referenceId,
+            String requestPayload
+    ) {
+        return AiHistory.builder()
+                .id(UUID.randomUUID())
+                .requestType(requestType)
+                .referenceType(referenceType)
+                .referenceId(referenceId)
+                .requestPayload(requestPayload)
+                .status(AiStatus.PENDING)
+                .requestedAt(LocalDateTime.now())
+                .build();
+    }
+
     public void markSuccess(String responsePayload, String reason) {
         this.responsePayload = responsePayload;
         this.reason = reason;
@@ -74,6 +91,6 @@ public class AiHistory extends BaseAudit {
     }
 
     public void aiSoftDelete(UUID deletedBy) {
-        this.aiSoftDelete(deletedBy);
+        this.softDelete(deletedBy);
     }
 }

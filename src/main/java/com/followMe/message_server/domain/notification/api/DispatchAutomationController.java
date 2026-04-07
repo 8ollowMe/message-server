@@ -1,5 +1,6 @@
 package com.followMe.message_server.domain.notification.api;
 
+import com.followMe.message_server.domain.notification.service.MorningAiAutomationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DispatchAutomationController {
 
-    private final DispatchAiAutomationService dispatchAiAutomationService;
+    private final MorningAiAutomationService morningAiAutomationService;
 
     // 수동 테스트용
     @PostMapping("/run")
     public ResponseEntity<String> runNow() {
-        dispatchAiAutomationService.executeMorningDispatch();
+        morningAiAutomationService.processTarget();
         return ResponseEntity.ok("아침 배송 자동 발송 작업이 실행되었습니다.");
     }
 }

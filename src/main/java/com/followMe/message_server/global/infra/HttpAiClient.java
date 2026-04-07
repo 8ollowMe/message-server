@@ -5,6 +5,8 @@ import com.followMe.message_server.domain.ai.dto.request.AiHttpRequest;
 import com.followMe.message_server.domain.ai.dto.request.GeminiRequest;
 import com.followMe.message_server.domain.ai.dto.request.GeminiRequestMapper;
 import com.followMe.message_server.domain.ai.dto.response.AiHttpResponse;
+import com.followMe.message_server.domain.notification.dto.request.DispatchDeadlineRequest;
+import com.followMe.message_server.domain.notification.dto.response.DispatchDeadlineResponse;
 import com.followMe.message_server.global.properties.AiProperties;
 import com.followMe.message_server.global.exception.BusinessException;
 import com.followMe.message_server.global.exception.ErrorCode;
@@ -57,5 +59,10 @@ public class HttpAiClient implements AiClient {
             log.error("AI 호출 실패", e);
             throw new BusinessException(ErrorCode.AI_CALL_FAILED, e);
         }
+    }
+
+    @Override
+    public DispatchDeadlineResponse generateDispatchDeadline(String internalRequest, String systemId, DispatchDeadlineRequest request) {
+        return null;
     }
 }
